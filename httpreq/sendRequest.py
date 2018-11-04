@@ -37,9 +37,17 @@ class send():
         time.sleep(sleep)
         sdata = ''
         if 'GET'.__eq__(method):
-            sdata = req.get(url=url, headers=header)
+            try:
+                sdata = req.get(url=url, headers=header)
+            except Exception as e:
+                self.send_req(url, method, data, clickurl)
         elif 'POST'.__eq__(method):
-            sdata = req.post(url=url, headers=header, data=data)
+            try:
+                sdata = req.post(url=url, headers=header, data=data)
+            except Exception as e:
+                self.send_req(url, method, data, clickurl)
         sdata.encoding = req.utils.get_encodings_from_content(str(sdata.content))[0]
         # print(sdata.encoding)
+        if sdata.status_code != 200:
+            self.send_req(url, method, data, clickurl)
         return sdata

@@ -21,7 +21,7 @@ from mysqldat.spider_log import log
 class dytt():
     ## 初始化变量
     def __init__(self):
-        self.__log = log
+        self.__log = log('dytt')
 
     def find_by_classic(self, classic):
         '''
@@ -76,8 +76,7 @@ class dytt():
                                 # print('classic：%s,home: %s,time: %s,hot：%s,title: %s,desc: %s,down: %s'%(classic,mrules['main'],ltime[x],hot[x],ptit[0],desc,pdownload))
                                 d = dt(classic=classic, home=mrules['main'], m_time=ltime[x], title=ptit[0], desc=desc,
                                        downloadurl=pdownload, hot=hot[x])
-                                self.__log.print_log(home=mrules['main'], sql='',
-                                                     errorinfo='{0}——准备数据中，开始存入数据库'.format(ptit[0]))
+                                self.__log.print_log(home=mrules['main'], sql='',errorinfo='{0}——准备数据中，开始存入数据库'.format(ptit[0]))
                                 d.save()
 
     ## 处理网址拼接的函数，（不一定留）

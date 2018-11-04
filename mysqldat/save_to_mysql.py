@@ -18,7 +18,7 @@ from rules.database import database as ds
 class Mysqlopertion:
     def __init__(self, source):
         self.__source = source
-        self.__log = log
+        self.__log = log(self.__source)
 
     def __get_conn__(self):
 
@@ -67,10 +67,10 @@ class Mysqlopertion:
                             #     self.__log.print_log(home=self.__log, sql=usql, errorinfo=repr(e))
                         except Exception as e:
                             db.rollback()
-                            self.__log.print_log(home=self.__log, sql=downsql, errorinfo=repr(e))
+                            self.__log.print_log(home=self.__source, sql=downsql, errorinfo=repr(e))
             except Exception as e:
                 db.rollback()
-                self.__log.print_log(home=self.__log, sql=sql, errorinfo=repr(e))
+                self.__log.print_log(home=self.__source, sql=sql, errorinfo=repr(e))
 
     def check_exists(self, tit):
         db, cursor = self.__get_conn__()
@@ -79,7 +79,7 @@ class Mysqlopertion:
         try:
             cursor.execute(e_sql)
         except Exception as e:
-            print('【爬虫抓取日志:{0}】：SQL查询,执行失败的是---{1},错误信息：{2}'.format(datetime.datetime.now(), e_sql, repr(e)))
+            log.print_log(home=self.__source, sql=e_sql, errorinfo=repr(e))
 
         data = cursor.fetchone()
         if data[0] > 0:

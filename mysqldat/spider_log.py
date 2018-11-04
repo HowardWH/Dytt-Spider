@@ -52,7 +52,7 @@ class log:
         try:
             cursor.execute(lsql)
             db.commit()
-            print('【爬虫抓取日志:{0}】：日志插入执行成功，SQL是：{1},错误信息：{2}'.format(date.datetime.now(), sql, errorinfo))
+            print('【爬虫抓取日志:{0}】：日志插入执行成功，SQL是：{1},信息是：{2}'.format(date.datetime.now(), sql, errorinfo))
         except Exception as e:
             db.rollback()
-            print('【爬虫抓取日志:{0}】：日志插入失败'.format(date.datetime.now()))
+            print('【爬虫抓取日志:{0}】：日志插入失败,SQL是：{1}错误信息：{2}'.format(date.datetime.now(),sql,repr(e)))
